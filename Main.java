@@ -4,20 +4,19 @@ class Main
 {
   public static void main(String[] args)
   {
-    String input="public class Test";
+    String input  =  "public class Test";
     String input1 = "abstract class Animal";
     String input2 = "Public class Test1";//P should not be caps 
     String input3 = "fin class ";//missing class name 
-    String input4 = "fin class Test";
+    String input4 = "   final class TestAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
-    /*String re1="((?:[a-z][a-z]+))";	// Word 1
-    String re2="(\\s+)";	// White Space 1
-    String re3="((?:[a-z][a-z]+))";	// Word 2
-    String re4="(\\s+)";	// White Space 2
-    String re5="((?:[a-z][a-z]+))";	// Word 3*/
+   
     //Pattern p = Pattern.compile("(public\\s|abstract\\s|fin\\s)?\\s*(class)\\s+(\\w+)");
-    String regex = "(public\\s|abstract\\s|fin\\s)?\\s*(class)\\s+(\\w+)";
-    //Pattern p = Pattern.compile(re1+re2+re3+re4+re5,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+    String regex = "\\s*(public\\s|abstract\\s|final\\s)?\\s*(class)\\s+(\\w+)\\s*";
+    //public or abstract or fin in one or zero + 0 or more number of space + "class" + 1 or more number of space + 1 or more number of letters 
+    Pattern p = Pattern.compile(regex);
+    System.out.println(p.toString());
+    String class_name = "";
     boolean m = Pattern.matches(regex, input); 
     boolean m1 = Pattern.matches(regex, input1);
     boolean m2 = Pattern.matches(regex, input2);
@@ -26,6 +25,11 @@ class Main
     if(m)
     {
     	System.out.println("M is Matches!" );
+    	class_name = getClassName(input);
+    	System.out.println("IF: class name is " + class_name);
+    	
+    	
+    	
     }
     else
     {
@@ -35,6 +39,9 @@ class Main
     if(m1)
     {
     	System.out.println("Matches!");
+    	class_name = getClassName(input1);
+    	System.out.println("IF: class name is " + class_name);
+    	
     }
     else
     {
@@ -43,6 +50,8 @@ class Main
     if(m2)
     {
     	System.out.println("Matches!");
+    	class_name = getClassName(input2);
+    	System.out.println("IF: class name is " + class_name);
     }
     else
     {
@@ -51,6 +60,8 @@ class Main
     if(m3)
     {
     	System.out.println("Matches!");
+    	class_name = getClassName(input3);
+    	System.out.println("IF: class name is " + class_name);
     }
     else
     {
@@ -59,20 +70,35 @@ class Main
     if(m4)
     {
     	System.out.println("Matches!");
+    	class_name = getClassName(input4);
+    	System.out.println("IF: class name is " + class_name);
     }
     else
     {
     	System.out.println("Something wrong");
     }
     
-    /*if (m.find())
-    {
-        String word1=m.group(1);
-        String ws1=m.group(2);
-        String word2=m.group(3);
-        String ws2=m.group(4);
-        String word3=m.group(5);
-        System.out.print("("+word1.toString()+")"+"("+ws1.toString()+")"+"("+word2.toString()+")"+"("+ws2.toString()+")"+"("+word3.toString()+")"+"\n");
-    }*/
-  }
+    
+   
+  }//main
+  /*
+   * precondition: class declaration is ensured as correct 
+   * param: input is original line 
+   * */
+  static String getClassName(String input)
+  {
+	 String class_name = "";
+	//after ensuing class declaration is correct 
+  	String[] classDeclaration = input.split("\\s+");
+  	for(int i = 0; i< classDeclaration.length; i++)
+  	{
+  		if(classDeclaration[i].equals("class"))
+  		{
+  			class_name = classDeclaration[i+1];
+  			//System.out.println("FUNC: class name is " + class_name);
+  		}
+  	}
+  	return class_name;
+  }//getClassName
+  
 }
