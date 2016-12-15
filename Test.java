@@ -14,11 +14,13 @@ public class Test {
 		}
 		//String line1 = "(char)\\s+\\w+\\s*(;?|((=\\s*\\'[A-Za-z\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\~\\=\\+\\/"
 					//+"\""+ "\\']?)"+ "\\s*));";
-		String input = "String a = " +  " AAA" +";"; 
+		String input = "String a = " +  "\"AAA" +"\";"; 
 		String input1 = "String s;";
 		System.out.println(input);
-		String regex = "(String)\\s+\\w+\\s*(;?|((=\\s*(\\p{Punct}|\\p{Alnum})+)+)\\s*)";
+		String regex = "(String)\\s+\\w+\\s*(;?|(=\\s*\"(\\p{Punct}|\\p{Alnum})+\")\\s*);";
+		
 		Pattern p = Pattern.compile(regex);
+		System.out.println(p.toString());
 		if(Pattern.matches(regex, input))
 		{
 			System.out.println("TRUE");
